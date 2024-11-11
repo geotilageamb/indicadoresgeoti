@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 # Função para carregar dados de uma aba específica do Excel
 def load_data(sheet_name):
@@ -35,11 +35,9 @@ with tab1:
     data1 = data1[data1['Categoria'] != 'Todas as categorias']
     st.bar_chart(data1.set_index('Categoria'))
 
-    # Gráfico de Pizza
-    fig1, ax1 = plt.subplots()
-    ax1.pie(data1['Total'], labels=data1['Categoria'], autopct='%1.1f%%', startangle=90)
-    ax1.axis('equal')
-    st.pyplot(fig1)
+    # Gráfico de Pizza Interativo
+    fig1 = px.pie(data1, names='Categoria', values='Total', title='Distribuição por Categoria')
+    st.plotly_chart(fig1)
 
 # Dashboard 2
 with tab2:
@@ -48,11 +46,9 @@ with tab2:
     data2 = data2[data2['Status'] != 'Todos os status']
     st.bar_chart(data2.set_index('Status'))
 
-    # Gráfico de Pizza
-    fig2, ax2 = plt.subplots()
-    ax2.pie(data2['Total'], labels=data2['Status'], autopct='%1.1f%%', startangle=90)
-    ax2.axis('equal')
-    st.pyplot(fig2)
+    # Gráfico de Pizza Interativo
+    fig2 = px.pie(data2, names='Status', values='Total', title='Distribuição por Status')
+    st.plotly_chart(fig2)
 
 # Dashboard 3
 with tab3:

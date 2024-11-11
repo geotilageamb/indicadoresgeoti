@@ -38,7 +38,7 @@ with tab1:
     # Gráfico de Pizza
     fig1, ax1 = plt.subplots()
     ax1.pie(data1['Total'], labels=data1['Categoria'], autopct='%1.1f%%', startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    ax1.axis('equal')
     st.pyplot(fig1)
 
 # Dashboard 2

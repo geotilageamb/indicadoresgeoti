@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Função para carregar dados de uma aba específica do Excel
 def load_data(sheet_name):
-    df = pd.read_excel('indicadoresGeoTI_11nov2024.xlsx', sheet_name=sheet_name, header=1)
-    return df
+    return pd.read_excel('indicadoresGeoTI_11nov2024.xlsx', sheet_name=sheet_name, header=1)
 
 # Função para ordenar os meses
 def order_months(df):
@@ -35,12 +35,24 @@ with tab1:
     data1 = data1[data1['Categoria'] != 'Todas as categorias']
     st.bar_chart(data1.set_index('Categoria'))
 
+    # Gráfico de Pizza
+    fig1, ax1 = plt.subplots()
+    ax1.pie(data1['Total'], labels=data1['Categoria'], autopct='%1.1f%%', startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    st.pyplot(fig1)
+
 # Dashboard 2
 with tab2:
     st.header('Chamados GeoTI por Status (11/11/2024)')
     data2 = load_data(sheet_names[1])
     data2 = data2[data2['Status'] != 'Todos os status']
     st.bar_chart(data2.set_index('Status'))
+
+    # Gráfico de Pizza
+    fig2, ax2 = plt.subplots()
+    ax2.pie(data2['Total'], labels=data2['Status'], autopct='%1.1f%%', startangle=90)
+    ax2.axis('equal')
+    st.pyplot(fig2)
 
 # Dashboard 3
 with tab3:

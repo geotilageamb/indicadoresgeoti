@@ -30,7 +30,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 
 # Dashboard 1
 with tab1:
-    st.header('Chamados GeoTI por Categoria (11/11/2024)')
+    st.header('Chamados GeoTI por Categoria (até 20/12/2024)')
     data1 = load_data(sheet_names[0])
     data1 = data1[data1['Categoria'] != 'Todas as categorias']
     st.bar_chart(data1.set_index('Categoria'))
@@ -41,7 +41,7 @@ with tab1:
 
 # Dashboard 2
 with tab2:
-    st.header('Chamados GeoTI por Status (11/11/2024)')
+    st.header('Chamados GeoTI por Status (até 20/12/2024)')
     data2 = load_data(sheet_names[1])
     data2 = data2[data2['Status'] != 'Todos os status']
     st.bar_chart(data2.set_index('Status'))
@@ -60,7 +60,7 @@ with tab3:
 
 # Dashboard 4
 with tab4:
-    st.header('Chamados GeoTI por Mês (01/01/2024-11/11/2024)')
+    st.header('Chamados GeoTI por Mês (01/01/2024-20/12/2024)')
     data4 = load_data(sheet_names[3])
     data4 = data4[data4['Mês'] != 'Todos os meses']
     data4 = order_months(data4)

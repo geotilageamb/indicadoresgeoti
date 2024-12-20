@@ -4,7 +4,7 @@ import plotly.express as px
 
 # Função para carregar dados de uma aba específica do Excel
 def load_data(sheet_name):
-    return pd.read_excel('indicadoresGeoTI_11nov2024.xlsx', sheet_name=sheet_name, header=1)
+    return pd.read_excel('indicadoresGeoTI_20dez2024.xlsx', sheet_name=sheet_name, header=1)
 
 # Função para ordenar os meses
 def order_months(df):

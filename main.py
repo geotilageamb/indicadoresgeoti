@@ -44,6 +44,7 @@ with tab2:
     st.header('Chamados GeoTI por Status (até 20/12/2024)')
     data2 = load_data(sheet_names[1])
     data2 = data2[data2['Status'] != 'Todos os status']
+    data2 = data2[data2['Status'] != 'Total']  # Adicionada esta linha para filtrar 'Total'
     st.bar_chart(data2.set_index('Status'))
 
     # Gráfico de Pizza Interativo

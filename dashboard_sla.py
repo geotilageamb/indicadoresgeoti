@@ -191,7 +191,7 @@ def show_dashboard():
             st.plotly_chart(fig_comp, use_container_width=True)
 
             # Tabela com os dados mensais
-            st.subheader('Dados Mensais')
+            st.subheader('Dados mensais')
             media_mensal['Média'] = media_mensal['Média'].round(2)
             st.dataframe(
                 media_mensal,

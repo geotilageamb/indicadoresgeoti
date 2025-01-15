@@ -62,7 +62,7 @@ def show_dashboard():
 
             with col4:
                 media_geral = sla_data['MÉDIA'].iloc[0]
-                st.metric("Média Geral", f"{media_geral:.2f} horas")
+                st.metric("Média geral", f"{media_geral:.2f} horas")
 
             # Gráficos do SLA
             col1, col2 = st.columns(2)
@@ -79,7 +79,7 @@ def show_dashboard():
                     y=media_geral,
                     line_dash="dash",
                     line_color="red",
-                    annotation_text=f"Média Geral: {media_geral:.2f}h"
+                    annotation_text=f"Média geral: {media_geral:.2f}h"
                 )
                 st.plotly_chart(fig_tempo, use_container_width=True)
 
@@ -159,7 +159,7 @@ def show_dashboard():
                 y=media_geral,
                 line_dash="dash",
                 line_color="red",
-                annotation_text=f"Média Geral: {media_geral:.2f}h"
+                annotation_text=f"Média geral: {media_geral:.2f}h"
             )
 
             st.plotly_chart(fig_temporal, use_container_width=True)
@@ -178,7 +178,7 @@ def show_dashboard():
                 y=media_geral,
                 line_dash="dash",
                 line_color="red",
-                annotation_text=f"Média Geral: {media_geral:.2f}h"
+                annotation_text=f"Média geral: {media_geral:.2f}h"
             )
 
             # Melhorar o layout
@@ -244,7 +244,7 @@ def show_dashboard():
                     'ID': st.column_config.NumberColumn('ID', format='%d'),
                     'Solicitado em': st.column_config.DatetimeColumn('Solicitado em'),
                     'Tempo decorrido números': st.column_config.NumberColumn('Horas', format='%.2f'),
-                    'MÉDIA': st.column_config.NumberColumn('Média Geral', format='%.2f'),
+                    'MÉDIA': st.column_config.NumberColumn('Média geral', format='%.2f'),
                     'Tempo decorrido': st.column_config.TextColumn('Tempo Decorrido', width='medium')
                 }
             )

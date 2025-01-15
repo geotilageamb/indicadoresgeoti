@@ -91,6 +91,92 @@ def show_dashboard():
                 )
                 st.plotly_chart(fig_prioridade, use_container_width=True)
 
+            # Análise temporal
+            st.subheader('Evolução do Tempo Médio de Atendimento')
+
+            # Converter 'Solicitado em' para datetime se ainda não estiver
+            sla_data['Solicitado em'] = pd.to_datetime(sla_data['Solicitado em'])
+
+            # Criar coluna de mês/ano
+            sla_data['Mês/Ano'] = sla_data['Solicitado em'].dt.strftime('%Y-%m')
+
+            # Calcular média mensal
+            media_mensal = sla_data.groupby('Mês/Ano')['Tempo decorrido números'].agg([
+                ('Média', 'mean'),
+                ('Quantidade', 'count')
+            ]).reset_index()
+
+            # Ordenar por mês/ano
+            media_mensal = media_mensal.sort_values('Mês/Ano')
+
+            # Criar gráfico combinado de linha e barras
+            fig_temporal = px.line(
+                media_mensal,
+                x='Mês/Ano',
+                y='Média',
+                title='Evolução do Tempo Médio de Atendimento por Mês',
+                markers=True
+            )
+
+            # Adicionar barras para quantidade de chamados
+            fig_temporal.add_bar(
+                x=media_mensal['Mês/Ano'],
+                y=media_mensal['Quantidade'],
+                name='Quantidade de Chamados',
+                yaxis='y2',
+                opacity=0.3
+            )
+
+            # Configurar eixos
+            fig_temporal.update_layout(
+                yaxis=dict(
+                    title='Tempo Médio (horas)',
+                    side='left'
+                ),
+                yaxis2=dict(
+                    title='Quantidade de Chamados',
+                    side='right',
+                    overlaying='y',
+                    showgrid=False
+                ),
+                xaxis=dict(
+                    title='Mês/Ano',
+                    tickangle=45
+                ),
+                hovermode='x unified',
+                showlegend=True,
+                legend=dict(
+                    orientation='h',
+                    yanchor='bottom',
+                    y=1.02,
+                    xanchor='right',
+                    x=1
+                )
+            )
+
+            # Adicionar linha da média geral
+            fig_temporal.add_hline(
+                y=media_geral,
+                line_dash="dash",
+                line_color="red",
+                annotation_text=f"Média Geral: {media_geral:.2f}h"
+            )
+
+            st.plotly_chart(fig_temporal, use_container_width=True)
+
+            # Tabela com os dados mensais
+            st.subheader('Dados Mensais')
+            media_mensal['Média'] = media_mensal['Média'].round(2)
+            st.dataframe(
+                media_mensal,
+                hide_index=True,
+                column_config={
+                    'Mês/Ano': st.column_config.TextColumn('Mês/Ano'),
+                    'Média': st.column_config.NumberColumn('Tempo Médio (horas)', format='%.2f'),
+                    'Quantidade': st.column_config.NumberColumn('Quantidade de Chamados')
+                }
+            )
+
             # Filtros
             st.subheader('Filtros')
             col1, col2, col3 = st.columns(3)
@@ -136,23 +222,6 @@ def show_dashboard():
                     'Tempo decorrido': st.column_config.TextColumn('Tempo Decorrido', width='medium')
                 }
             )
-
-            # Comparação com a média
-            st.subheader('Análise Comparativa')
-            fig_comp = px.scatter(
-                df_sla_filtered,
-                x='Solicitado em',
-                y='Tempo decorrido números',
-                color='Categoria',
-                title='Tempo de Atendimento ao Longo do Tempo'
-            )
-            fig_comp.add_hline(
-                y=media_geral,
-                line_dash="dash",
-                line_color="red",
-                annotation_text=f"Média Geral: {media_geral:.2f}h"
-            )
-            st.plotly_chart(fig_comp, use_container_width=True)
 
             # Download dos dados
             csv = df_sla_filtered.to_csv(index=False).encode('utf-8')

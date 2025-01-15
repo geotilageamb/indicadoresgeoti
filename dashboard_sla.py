@@ -164,6 +164,32 @@ def show_dashboard():
 
             st.plotly_chart(fig_temporal, use_container_width=True)
 
+            # Comparação com a média (Scatter Plot)
+            st.subheader('Distribuição dos Tempos de Atendimento')
+            fig_comp = px.scatter(
+                sla_data,
+                x='Solicitado em',
+                y='Tempo decorrido números',
+                color='Categoria',
+                title='Tempo de Atendimento por Chamado ao Longo do Tempo',
+                hover_data=['ID', 'Solicitante', 'Status']
+            )
+            fig_comp.add_hline(
+                y=media_geral,
+                line_dash="dash",
+                line_color="red",
+                annotation_text=f"Média Geral: {media_geral:.2f}h"
+            )
+
+            # Melhorar o layout
+            fig_comp.update_layout(
+                xaxis_title="Data de Solicitação",
+                yaxis_title="Tempo de Atendimento (horas)",
+                hovermode='closest'
+            )
+
+            st.plotly_chart(fig_comp, use_container_width=True)
+
             # Tabela com os dados mensais
             st.subheader('Dados Mensais')
             media_mensal['Média'] = media_mensal['Média'].round(2)

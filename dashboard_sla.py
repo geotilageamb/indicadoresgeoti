@@ -92,7 +92,7 @@ def show_dashboard():
                 st.plotly_chart(fig_prioridade, use_container_width=True)
 
             # Análise temporal
-            st.subheader('Evolução do Tempo médio de conclusão dos chamados')
+            st.subheader('Evolução do tempo médio de conclusão dos chamados')
 
             # Converter 'Solicitado em' para datetime se ainda não estiver
             sla_data['Solicitado em'] = pd.to_datetime(sla_data['Solicitado em'])
@@ -114,7 +114,7 @@ def show_dashboard():
                 media_mensal,
                 x='Mês/Ano',
                 y='Média',
-                title='Evolução do Tempo médio de conclusão dos chamados por mês',
+                title='Evolução do tempo médio de conclusão dos chamados por mês',
                 markers=True
             )
 
@@ -165,13 +165,13 @@ def show_dashboard():
             st.plotly_chart(fig_temporal, use_container_width=True)
 
             # Comparação com a média (Scatter Plot)
-            st.subheader('Distribuição dos Tempos de Atendimento')
+            st.subheader('Distribuição dos tempos de conclusão dos chamados')
             fig_comp = px.scatter(
                 sla_data,
                 x='Solicitado em',
                 y='Tempo decorrido números',
                 color='Categoria',
-                title='Tempo de Atendimento por Chamado ao Longo do Tempo',
+                title='Tempo de conclusão dos chamados ao longo do tempo',
                 hover_data=['ID', 'Solicitante', 'Status']
             )
             fig_comp.add_hline(

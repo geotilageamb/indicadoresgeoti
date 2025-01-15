@@ -66,5 +66,4 @@ with tab4:
     data4 = data4[data4['Mês'] != 'Todos os meses']
     data4 = order_months(data4)
     st.line_chart(data4.set_index('Mês'))
-
-# Para executar o aplicativo, use o comando: streamlit run nome_do_arquivo.py
+    

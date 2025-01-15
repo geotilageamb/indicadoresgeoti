@@ -53,7 +53,7 @@ def show_dashboard():
 
             with col2:
                 tempo_medio = sla_data['Tempo decorrido números'].mean()
-                st.metric("Tempo Médio de Atendimento", f"{tempo_medio:.2f} horas")
+                st.metric("Tempo médio de conclusão dos chamados", f"{tempo_medio:.2f} horas")
 
             with col3:
                 chamados_no_prazo = len(sla_data[sla_data['Tempo decorrido números'] <= 24])
@@ -73,7 +73,7 @@ def show_dashboard():
                     tempo_categoria,
                     x='Categoria',
                     y='Tempo decorrido números',
-                    title='Tempo Médio de Atendimento por Categoria (horas)'
+                    title='Tempo médio de conclusão dos chamados por Categoria (horas)'
                 )
                 fig_tempo.add_hline(
                     y=media_geral,
@@ -92,7 +92,7 @@ def show_dashboard():
                 st.plotly_chart(fig_prioridade, use_container_width=True)
 
             # Análise temporal
-            st.subheader('Evolução do Tempo Médio de Atendimento')
+            st.subheader('Evolução do Tempo médio de conclusão dos chamados')
 
             # Converter 'Solicitado em' para datetime se ainda não estiver
             sla_data['Solicitado em'] = pd.to_datetime(sla_data['Solicitado em'])
@@ -114,7 +114,7 @@ def show_dashboard():
                 media_mensal,
                 x='Mês/Ano',
                 y='Média',
-                title='Evolução do Tempo Médio de Atendimento por Mês',
+                title='Evolução do Tempo médio de conclusão dos chamados por mês',
                 markers=True
             )
 

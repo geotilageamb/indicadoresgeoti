@@ -1,13 +1,36 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from datetime import datetime, timedelta
+
+def convert_time_to_hours(time_str):
+    try:
+        if pd.isna(time_str):
+            return 0
+        if isinstance(time_str, str):
+            # Se for string no formato HH:MM:SS
+            hours, minutes, seconds = map(float, time_str.split(':'))
+            return hours + minutes/60 + seconds/3600
+        elif isinstance(time_str, timedelta):
+            # Se for timedelta
+            return time_str.total_seconds() / 3600
+        else:
+            # Para outros formatos de tempo
+            total_seconds = time_str.hour * 3600 + time_str.minute * 60 + time_str.second
+            return total_seconds / 3600
+    except:
+        return 0
 
 def load_sla_data():
     try:
         # Carrega os dados do Excel
         df = pd.read_excel('geoti_sla.xlsx')
 
-        # Calcula a média dos tempos para cada registro
+        # Converte a coluna de tempo para horas
+        if 'Tempo decorrido' in df.columns:
+            df['Tempo decorrido números'] = df['Tempo decorrido'].apply(convert_time_to_hours)
+
+        # Calcula a média geral
         df['MÉDIA'] = df['Tempo decorrido números'].mean()
 
         return df
